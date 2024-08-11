@@ -3,6 +3,12 @@ require('dotenv').config();
 const axios = require('axios');
 const sgMail = require('@sendgrid/mail');
 
+// Log environment variables (for debugging, avoid in production)
+console.log('SENDGRID_API_KEY:', process.env.SENDGRID_API_KEY ? 'Set' : 'Not Set');
+console.log('MONDAY_API_KEY:', process.env.MONDAY_API_KEY ? 'Set' : 'Not Set');
+console.log('BOARD_ID:', process.env.BOARD_ID);
+console.log('EMAIL_FROM:', process.env.EMAIL_FROM);
+
 // Set your SendGrid API key
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -40,7 +46,7 @@ const fetchMondayData = async () => {
         console.log('Data fetched successfully:', response.data);
         return response.data.data.boards[0].items_page.items;
     } catch (error) {
-        console.error('Error fetching data from Monday.com:', error);
+        console.error('Error fetching data from Monday.com:', error.response ? error.response.data : error.message);
         throw error;
     }
 };
@@ -80,7 +86,7 @@ const sendEmails = async (recipients) => {
             await sgMail.send(msg);
             console.log(`Email sent to ${person.name} (${person.email})`);
         } catch (error) {
-            console.error(`Error sending email to ${person.name} (${person.email}):`, error);
+            console.error(`Error sending email to ${person.name} (${person.email}):`, error.response ? error.response.body : error.message);
         }
     }
 };
