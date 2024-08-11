@@ -1,0 +1,22 @@
+# Project Name
+[project]
+name = "WaltonSystem"
+
+
+# Define the deployment
+[[services]]
+name = "main"
+
+    # Build step
+    [services.build]
+    command = "npm install"
+
+    # Start step
+    [services.start]
+    command = "node WaltonProject.js"
+
+    # Cron job configuration
+    [[services.cron]]
+    schedule = "*/5 * * * *"
+    command = "node WaltonProject.js"
+    timezone = "UTC"
