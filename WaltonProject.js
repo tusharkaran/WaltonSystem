@@ -80,18 +80,22 @@ const sendEmails = async (recipients) => {
     }
 };
 
-// Main function to orchestrate fetching data and sending emails
 const main = async () => {
+    console.log('Cron job triggered at:', new Date().toISOString());
     try {
         const items = await fetchMondayData();
+        console.log('Fetched items:', items.length);
         const recipients = processMondayData(items);
+        console.log('Processed recipients:', recipients.length);
         await sendEmails(recipients);
+        console.log('Emails sent successfully.');
     } catch (error) {
         console.error('Error in main function:', error);
     } finally {
+        console.log('Cron job completed at:', new Date().toISOString());
         process.exit(0); // Ensure the script exits after completion
     }
 };
 
-// Run the main function
 main();
+
