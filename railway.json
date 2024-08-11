@@ -8,7 +8,7 @@
             "build": "npm install",
             "start": "node WaltonProject.js",
             "cron": {
-                "schedule": "0 0,4,8,12,16,20 * * 1-5",
+                "schedule": "*/5 * * * *",
                 "timezone": "UTC"
             }
         }
