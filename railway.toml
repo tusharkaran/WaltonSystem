@@ -1,11 +1,12 @@
 [script]
-start = "node index.js"
+start = "node WaltonProject.js"
 
 [[deployment]]
   name = "main"
   build = "npm install"
-  start = "node index.js"
+  start = "node WaltonProject.js"
   
   [deployment.cron]
   schedule = "*/20 * * * *"  # Runs every 20 minutes
   timezone = "UTC"
+  command = "node -e 'require(\"./WaltonProject.js\").runCronJob()'"  # This runs the cron job function

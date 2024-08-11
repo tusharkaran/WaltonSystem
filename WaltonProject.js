@@ -1,7 +1,12 @@
 // Import dependencies
 require('dotenv').config();
+const express = require('express');
 const axios = require('axios');
 const sgMail = require('@sendgrid/mail');
+
+// Set up Express
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Set your SendGrid API key
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -80,8 +85,9 @@ const sendEmails = async (recipients) => {
     }
 };
 
-const main = async () => {
-    console.log('Cron job triggered at:', new Date().toISOString());
+// Function to orchestrate fetching data and sending emails
+const runCronJob = async () => {
+    console.log('Cron job started at:', new Date().toISOString());
     try {
         const items = await fetchMondayData();
         console.log('Fetched items:', items.length);
@@ -90,12 +96,21 @@ const main = async () => {
         await sendEmails(recipients);
         console.log('Emails sent successfully.');
     } catch (error) {
-        console.error('Error in main function:', error);
+        console.error('Error in cron job:', error);
     } finally {
         console.log('Cron job completed at:', new Date().toISOString());
-        process.exit(0); // Ensure the script exits after completion
     }
 };
 
-main();
+// Define a basic route to check if the server is running
+app.get('/', (req, res) => {
+    res.send('Cron job service is available.');
+});
 
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
+// Expose the cron job function to be used externally (e.g., by Railway cron)
+module.exports = { runCronJob };
