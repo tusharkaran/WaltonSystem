@@ -93,9 +93,19 @@ const main = async () => {
         console.error('Error in main function:', error);
     } finally {
         console.log('Cron job completed at:', new Date().toISOString());
-        process.exit(0); // Ensure the script exits after completion
+        process.exit(0);
     }
 };
 
 main();
+
+// Railway.toml file code to deploy and schdule the cron job  
+
+
+// [build]
+// build = "npm install"
+
+// [deploy]
+// startCommand = "node WaltonProject.js"
+// cronSchedule = "0 */4 * * 1-5"
 
