@@ -1,11 +1,8 @@
-[script]
-start = "node index.js"
+[build]
+build = "npm install"
 
-[[deployment]]
-  name = "main"
-  build = "npm install"
-  start = "node index.js"
-  
-  [deployment.cron]
-  schedule = "*/20 * * * *"  # Runs every 20 minutes
-  timezone = "UTC"
+[deploy]
+startCommand ="node WaltonProject.js"
+cronSchedule = '*/15 * * * *'
+
+
