@@ -3,4 +3,4 @@ build = "npm install"
 
 [deploy]
 startCommand = "node WaltonProject.js"
-cronSchedule = "0 */4 * * 1-5"
+cronSchedule = "*/15 * * * *"
