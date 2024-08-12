@@ -33,7 +33,7 @@ const fetchMondayData = async () => {
                     'Content-Type': 'application/json',
                     'Authorization': process.env.MONDAY_API_KEY,
                     'API-version': '2023-10'
-                }
+                },
             }
         );
         return response.data.data.boards[0].items_page.items;
